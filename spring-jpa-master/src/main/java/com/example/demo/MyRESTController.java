@@ -42,9 +42,11 @@ public class MyRESTController {
 	@GetMapping("/contact/{name}")
     public ResponseEntity<List<Contact>> getEmployeeById(@PathVariable(value = "name") String name)
     {
-        List<Contact>contacts =  repository.
-            
-        return ResponseEntity.ok().body(contacts);
+		ResponseEntity<List<Contact>> res =(ResponseEntity<List<Contact>>) repository.findAllByUsername(name);
+		return res;
     }
+
+
+	
 
 }

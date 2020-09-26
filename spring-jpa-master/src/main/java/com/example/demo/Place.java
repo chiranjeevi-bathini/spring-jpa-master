@@ -1,12 +1,16 @@
 package com.example.demo;
 
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
 @Entity
@@ -36,8 +40,14 @@ public class Place {
 			this.name = name;
 		}
 		
-		@ManyToMany(targetEntity = Contact.class,cascade = CascadeType.ALL )
-		
-		    private List<Contact> contacts;
+		@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+	    @JoinTable(name = "contact_places",
+	            joinColumns = {
+	            		@JoinColumn(name = "id", referencedColumnName = "id",
+	                            nullable = false, updatable = false)},
+	            inverseJoinColumns = {
+	                    @JoinColumn(name = "id", referencedColumnName = "id",
+	                            nullable = false, updatable = false)})
+	    private Set<Contact> contacts = new HashSet<>();
 
 }

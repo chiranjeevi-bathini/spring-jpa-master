@@ -1,10 +1,13 @@
 package com.example.demo;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -58,7 +61,6 @@ public class Contact {
     public void setName(String name) {
         this.name = name;
     }
-    @ManyToMany(targetEntity = Place.class, mappedBy = "roles", cascade = CascadeType.ALL)
-    
-        private List<Place> places;
+    @ManyToMany(mappedBy = "id", fetch = FetchType.LAZY)
+    private Set<Place> places = new HashSet<>();
 }
